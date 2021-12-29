@@ -1,5 +1,6 @@
 import { Grid, Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
+import { useEffect, useState } from "react";
 import { PrettoSlider } from "../../../../PrettoSlider/PrettoSlider";
 import { usereactVideoStore } from "../../../store/reactVideoStore";
 
@@ -11,20 +12,26 @@ export const SeekSlider: React.FC<SeekSliderProps> = ({ utils }) => {
 	// Hooks
 	const { playedTotal, playedSeconds } = usereactVideoStore();
 	// Consts
-	const { seekTo } = utils;
-	const value = playedSeconds.get();
+	const { getPercentage, getDuration, seekTo } = utils;
+	const [percent, setPercent] = useState(0);
+
+	useEffect(() => {
+		setPercent(getPercentage ? getPercentage() : 0);
+	}, [playedSeconds.get()]);
 
 	return (
 		<Grid item xs={12}>
 			<PrettoSlider
 				min={0}
 				max={100}
-				value={value}
+				value={percent}
 				valueLabelDisplay="auto"
 				onChange={(e, newValue) => {
-					const newPlayedTotal = newValue as number;
+					const value = newValue as number;
 
-					playedTotal.set(newPlayedTotal / 100);
+					const newPlayedTotal = (value / 100) * getDuration();
+
+					seekTo(newPlayedTotal);
 				}}
 			/>
 		</Grid>

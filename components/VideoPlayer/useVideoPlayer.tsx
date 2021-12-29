@@ -4,6 +4,8 @@ export const useVideoPlayer = (ref: any, refContainer: any) => {
 	let seekTo;
 	let getCurrentTime;
 	let toggleFullScreen;
+	let getDuration;
+	let getPercentage;
 
 	if (ref) {
 		seekTo = (a: number) => {
@@ -12,6 +14,16 @@ export const useVideoPlayer = (ref: any, refContainer: any) => {
 		};
 		getCurrentTime = () => {
 			return ref.current.getCurrentTime();
+		};
+
+		getDuration = () => {
+			return ref.current.getDuration();
+		};
+		getPercentage = () => {
+			const calculate =
+				(ref.current.getCurrentTime() / ref.current.getDuration()) * 100;
+
+			return parseInt(calculate.toString());
 		};
 	}
 
@@ -23,5 +35,11 @@ export const useVideoPlayer = (ref: any, refContainer: any) => {
 		};
 	}
 
-	return { seekTo, getCurrentTime, toggleFullScreen };
+	return {
+		seekTo,
+		getCurrentTime,
+		toggleFullScreen,
+		getDuration,
+		getPercentage,
+	};
 };

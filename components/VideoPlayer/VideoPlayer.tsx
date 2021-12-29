@@ -16,12 +16,21 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = () => {
 	//consts
 
 	const utils = useVideoPlayer(ref, playerContainerRef);
-
+	const [show, setShow] = useState(false);
+	const handleMouseEnter = (bool: boolean) => setShow(bool);
 	return (
 		<Container maxWidth="md">
-			<div ref={playerContainerRef} className={playerWrapper}>
+			<div
+				ref={playerContainerRef}
+				className={playerWrapper}
+				onMouseEnter={() => handleMouseEnter(true)}
+			>
 				<ReactPlayer setRef={setRef} />
-				<ControllerLayer utils={utils} />
+				<ControllerLayer
+					utils={utils}
+					show={show}
+					handleMouseEnter={handleMouseEnter}
+				/>
 			</div>
 			<Navigator />
 		</Container>

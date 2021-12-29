@@ -1,19 +1,32 @@
 import { Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
+import { useState } from "react";
 import { BotControls } from "./BotControls/BotControls";
 import { MidControls } from "./MidControls/MidControls";
 import { TopControls } from "./TopControls/TopControls";
 
 interface ControllerLayerProps {
 	utils: any;
+	show: any;
+	handleMouseEnter: any;
 }
 
-export const ControllerLayer: React.FC<ControllerLayerProps> = ({ utils }) => {
+export const ControllerLayer: React.FC<ControllerLayerProps> = ({
+	utils,
+	show,
+	handleMouseEnter,
+}) => {
 	// Hooks
 	const { controlsWrapper } = useStyles();
 
 	return (
-		<div className={controlsWrapper}>
+		<div
+			className={controlsWrapper}
+			style={{ display: show ? "" : "none" }}
+			onMouseLeave={() => {
+				handleMouseEnter(false);
+			}}
+		>
 			<TopControls />
 			<MidControls utils={utils} />
 			<BotControls utils={utils} />
