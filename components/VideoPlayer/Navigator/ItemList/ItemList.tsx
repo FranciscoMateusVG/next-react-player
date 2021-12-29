@@ -8,35 +8,56 @@ import {
 } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import { OverridableComponent } from "@mui/material/OverridableComponent";
+import { usereactVideoStore } from "../../store/reactVideoStore";
+import { useNavigatorStore } from "../../store/navigatorStore";
+import { QuestionAnswer, OndemandVideo } from "@mui/icons-material";
 
-interface ListItemProps {
-	Icon: OverridableComponent<SvgIconTypeMap<{}, "svg">>;
-	primary: String;
-	secondary: String;
-}
+interface ListItemProps {}
 
-export const ItemList: React.FC<ListItemProps> = ({
-	Icon,
-	primary,
-	secondary,
-}) => {
+export const ItemList: React.FC<ListItemProps> = ({}) => {
 	// States
 	// Consts
+	const { arr } = useNavigatorStore().get();
 	// useEffects
 	// Hooks
-	const {} = useStyles();
-	// Props
+	const { root } = useStyles();
+	const { url } = usereactVideoStore();
+	const { tipo } = useNavigatorStore();
 
 	return (
-		<ListItem>
-			<ListItemAvatar>
-				<Avatar>
-					<Icon />
-				</Avatar>
-			</ListItemAvatar>
-			<ListItemText primary={primary} secondary={secondary} />
-		</ListItem>
+		<>
+			{arr.map((a, i) => (
+				<ListItem
+					className={root}
+					key={i}
+					onClick={() => {
+						if (tipo.get() === "video") {
+							url.set(a.id);
+						}
+
+						tipo.set(a.type);
+					}}
+				>
+					<ListItemAvatar>
+						<Avatar>
+							{a.type === "video" && <OndemandVideo />}
+							{a.type === "questions" && <QuestionAnswer />}
+						</Avatar>
+					</ListItemAvatar>
+					<ListItemText
+						primary={a.primary}
+						secondary={a.blocked ? "Blocked" : ""}
+					/>
+				</ListItem>
+			))}
+		</>
 	);
 };
 
-const useStyles = makeStyles((theme: Theme) => createStyles({}));
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		root: {
+			cursor: "pointer",
+		},
+	}),
+);

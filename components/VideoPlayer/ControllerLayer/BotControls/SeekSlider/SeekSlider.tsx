@@ -2,6 +2,7 @@ import { Grid, Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import { useEffect, useState } from "react";
 import { PrettoSlider } from "../../../../PrettoSlider/PrettoSlider";
+import { useNavigatorStore } from "../../../store/navigatorStore";
 import { usereactVideoStore } from "../../../store/reactVideoStore";
 
 interface SeekSliderProps {
@@ -11,12 +12,34 @@ interface SeekSliderProps {
 export const SeekSlider: React.FC<SeekSliderProps> = ({ utils }) => {
 	// Hooks
 	const { playedTotal, playedSeconds } = usereactVideoStore();
+	const { arr } = useNavigatorStore();
 	// Consts
 	const { getPercentage, getDuration, seekTo } = utils;
 	const [percent, setPercent] = useState(0);
 
 	useEffect(() => {
 		setPercent(getPercentage ? getPercentage() : 0);
+
+		if (percent > 89) {
+			let index = 1;
+			let teste = arr.get();
+			const newArr = [...teste];
+
+			// newArr.forEach((a: any, i: any) => {
+			// 	if (!a.blocked) index = i;
+			// });
+			// index = index + 1;
+			const obj = arr[index].get();
+			const newObj = {
+				icon: obj.icon,
+				primary: obj.primary,
+				secondary: obj.secondary,
+				type: obj.type,
+				id: obj.id,
+				blocked: false,
+			};
+			arr[index].set((p) => newObj);
+		}
 	}, [playedSeconds.get()]);
 
 	return (

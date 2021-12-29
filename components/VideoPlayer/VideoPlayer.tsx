@@ -5,6 +5,8 @@ import { ControllerLayer } from "./ControllerLayer/ControllerLayer";
 import { useRef, useState } from "react";
 import { useVideoPlayer } from "./useVideoPlayer";
 import { Navigator } from "./Navigator/Navigator";
+import { useNavigatorStore } from "./store/navigatorStore";
+import { Questions } from "./Questions/Questions";
 
 interface VideoPlayerProps {}
 
@@ -13,6 +15,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = () => {
 	const { playerWrapper } = useStyles();
 	const [ref, setRef] = useState(null);
 	const playerContainerRef = useRef(null);
+	const { tipo } = useNavigatorStore();
 	//consts
 
 	const utils = useVideoPlayer(ref, playerContainerRef);
@@ -20,18 +23,21 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = () => {
 	const handleMouseEnter = (bool: boolean) => setShow(bool);
 	return (
 		<Container maxWidth="md">
-			<div
-				ref={playerContainerRef}
-				className={playerWrapper}
-				onMouseEnter={() => handleMouseEnter(true)}
-			>
-				<ReactPlayer setRef={setRef} />
-				<ControllerLayer
-					utils={utils}
-					show={show}
-					handleMouseEnter={handleMouseEnter}
-				/>
-			</div>
+			{tipo.get() === "video" && (
+				<div
+					ref={playerContainerRef}
+					className={playerWrapper}
+					onMouseEnter={() => handleMouseEnter(true)}
+				>
+					<ReactPlayer setRef={setRef} />
+					<ControllerLayer
+						utils={utils}
+						show={show}
+						handleMouseEnter={handleMouseEnter}
+					/>
+				</div>
+			)}
+			{tipo.get() === "questions" && <Questions />}
 			<Navigator />
 		</Container>
 	);
