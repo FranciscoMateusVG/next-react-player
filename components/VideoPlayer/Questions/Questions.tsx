@@ -33,7 +33,7 @@ export const Questions: React.FC<QuestionsProps> = () => {
 	// Props
 
 	return (
-		<>
+		<div style={{ width: "100%" }}>
 			<h1>Questões</h1>
 			<Formik
 				initialValues={{
@@ -85,7 +85,7 @@ export const Questions: React.FC<QuestionsProps> = () => {
 					</>
 				)}
 			/>
-		</>
+		</div>
 	);
 };
 

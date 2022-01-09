@@ -30,13 +30,17 @@ export const ItemList: React.FC<ListItemProps> = ({}) => {
 				<ListItem
 					className={root}
 					key={i}
-					onClick={() => {
-						if (tipo.get() === "video") {
-							url.set(a.id);
-						}
+					onClick={
+						a.blocked
+							? () => alert("Termine o video primeiro!")
+							: () => {
+									if (tipo.get() === "video") {
+										url.set(a.id);
+									}
 
-						tipo.set(a.type);
-					}}
+									tipo.set(a.type);
+							  }
+					}
 				>
 					<ListItemAvatar>
 						<Avatar>
@@ -46,7 +50,13 @@ export const ItemList: React.FC<ListItemProps> = ({}) => {
 					</ListItemAvatar>
 					<ListItemText
 						primary={a.primary}
-						secondary={a.blocked ? "Blocked" : ""}
+						secondary={
+							a.blocked ? (
+								<div style={{ color: "red" }}>Blocked</div>
+							) : (
+								""
+							)
+						}
 					/>
 				</ListItem>
 			))}

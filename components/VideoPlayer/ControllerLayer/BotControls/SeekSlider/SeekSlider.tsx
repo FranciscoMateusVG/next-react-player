@@ -11,7 +11,7 @@ interface SeekSliderProps {
 
 export const SeekSlider: React.FC<SeekSliderProps> = ({ utils }) => {
 	// Hooks
-	const { playedTotal, playedSeconds } = usereactVideoStore();
+	const { playedTotal, playedSeconds, url } = usereactVideoStore();
 	const { arr } = useNavigatorStore();
 	// Consts
 	const { getPercentage, getDuration, seekTo } = utils;
@@ -21,7 +21,12 @@ export const SeekSlider: React.FC<SeekSliderProps> = ({ utils }) => {
 		setPercent(getPercentage ? getPercentage() : 0);
 
 		if (percent > 89) {
-			let index = 1;
+			let index = 0;
+			if (url.get() === "https://www.youtube.com/watch?v=mHdrAl3Iv5A")
+				index = 1;
+			if (url.get() === "https://www.youtube.com/watch?v=6GxRsmbB23I")
+				index = 3;
+
 			let teste = arr.get();
 			const newArr = [...teste];
 

@@ -2,7 +2,7 @@ import { createState, useState } from "@hookstate/core";
 const reactVideoStore = createState({
 	width: "100%",
 	height: "100%",
-	url: "https://www.youtube.com/watch?v=V5Zr-tniqr0&ab_channel=It%27sAGundam",
+	url: "",
 	muted: false,
 	playing: false,
 	volume: 0.5,

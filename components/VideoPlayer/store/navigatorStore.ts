@@ -1,30 +1,38 @@
 import { createState, useState } from "@hookstate/core";
 import { QuestionAnswer, OndemandVideo } from "@mui/icons-material";
 const navigatorStore = createState({
-	tipo: "video",
+	tipo: "",
 	arr: [
 		{
 			icon: OndemandVideo,
-			primary: "Info1",
-			secondary: "Info2",
+			primary: "Video 1",
+			secondary: "Info",
 			type: "video",
-			id: "https://www.youtube.com/watch?v=UFFa0QoHWvE&ab_channel=Seatbelts-Topic",
+			id: "https://www.youtube.com/watch?v=mHdrAl3Iv5A",
 			blocked: false,
 		},
 		{
 			icon: QuestionAnswer,
-			primary: "Info2",
-			secondary: "Info3",
+			primary: "Questionario 1",
+			secondary: "Info",
 			type: "questions",
 			id: "a",
 			blocked: true,
 		},
 		{
 			icon: OndemandVideo,
-			primary: "Info3",
+			primary: "Video 2",
 			secondary: "Info4",
 			type: "video",
-			id: "https://www.youtube.com/watch?v=DwPWGUhEtP0&ab_channel=Yes-Topic",
+			id: "https://www.youtube.com/watch?v=6GxRsmbB23I",
+			blocked: true,
+		},
+		{
+			icon: OndemandVideo,
+			primary: "Video 3",
+			secondary: "Info4",
+			type: "video",
+			id: "https://www.youtube.com/watch?v=C6QxTPYs68s",
 			blocked: true,
 		},
 	],
